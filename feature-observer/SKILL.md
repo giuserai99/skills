@@ -66,8 +66,17 @@ principale. Se insiste dopo l'avviso, la decisione è sua.
 Alla prima invocazione costruisci il quadro di partenza. Tieni conto che devi
 ricavare tutto dal disco: non hai la conversazione dell'altra sessione.
 
-1. **Individua il progetto.** Se la tua directory di lavoro non è il progetto
-   osservato, chiedi il percorso all'utente e usa percorsi assoluti.
+1. **Individua il progetto e la sessione.** Quando l'utente dice "l'altra sessione"
+   senza precisare, quasi sempre intende **l'ultima**: quella con l'attività più
+   recente, cioè il lavoro che ha appena lasciato per venire a parlare con te.
+   Parti da questa ipotesi invece di chiedere. Se l'ambiente ti permette di
+   elencare le sessioni, prendi la più recente (escludendo la tua) e osserva il suo
+   progetto; se non puoi, l'equivalente sul disco sono le modifiche più recenti nel
+   progetto in cui ti trovi. Dichiara in una riga quale sessione o quale lavoro
+   stai seguendo, così l'utente può correggerti subito. Chiedi solo se l'ipotesi
+   non regge: più sessioni attive nello stesso momento su lavori diversi, oppure
+   l'ultima sessione non ha niente a che fare con ciò di cui l'utente sta parlando.
+   Se la tua directory di lavoro non è il progetto osservato, usa percorsi assoluti.
 2. **Fotografa lo stato** (adatta la sintassi alla shell disponibile):
    - `git --no-optional-locks branch --show-current` e `rev-parse HEAD`
    - `git --no-optional-locks status --porcelain --untracked-files=all`
