@@ -30,12 +30,15 @@ istruzioni.
 2. Spiega cosa vuoi realizzare e rispondi alle domande: poche per volta, con
    opzioni e una raccomandazione.
 3. Leggi la proposta con l'esito della verifica sul codice e conferma, o correggi.
-4. Rileggi il piano salvato e passane il percorso alla sessione che implementa.
+4. Rileggi il piano salvato e passane il percorso alla sessione che implementa,
+   per esempio con la skill [implement-plan](../implement-plan/).
 
 ## Cosa fa
 
 - **Parte dall'intento.** Ti chiede cosa vuoi realizzare e riformula ciò che ha
   capito prima di andare avanti.
+- **Conferma il branch.** Prima di leggere il codice ti chiede se il branch
+  corrente è quello da cui partirà la feature, e lo scrive in testa al piano.
 - **Guarda il codice prima di chiedere.** Così le domande sono concrete e non
   riguardano ciò che il progetto dice già.
 - **Domande fino a esaurirle.** Perimetro, comportamento, casi limite, dati,

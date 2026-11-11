@@ -64,7 +64,25 @@ cui un malinteso costa zero.
 
 ### 2. Primo sguardo alla codebase
 
-Prima di fare domande, guarda il progetto quanto basta per farle bene: struttura,
+**Prima il branch.** Guarda su quale branch ti trovi e chiedi all'utente se è
+quello giusto, in una riga: "Siamo su `<branch>` (ultimo commit `<sha breve>`): è
+il branch da cui partirà la feature?". Chiedilo sempre, anche quando sembra ovvio:
+tutto ciò che leggerai e verificherai da qui in poi è il codice di quel branch, e
+un piano verificato sul branch sbagliato cita file e comportamenti che chi
+implementa non troverà. Segnala anche, se le vedi, modifiche non committate: il
+piano descriverebbe uno stato che non è in nessun commit.
+
+Se il branch non è quello giusto, non cambiarlo tu: chiedi all'utente di
+spostarsi, oppure fallo solo se te lo dice esplicitamente e il working tree è
+pulito. Poi ricontrolla dove sei. Il branch e il commit confermati sono quelli
+che scriverai in testa al piano come Base. Se il progetto non usa git, salta
+questo controllo.
+
+Chiedi nello stesso momento, se non è già chiaro, se l'implementazione avverrà su
+quel branch o su uno nuovo creato da lì: va scritto nel piano, così chi implementa
+non deve indovinarlo.
+
+Poi, prima di fare domande sulla feature, guarda il progetto quanto basta per farle bene: struttura,
 stack, dove vive la funzionalità più vicina a quella richiesta, convenzioni
 evidenti, documenti di progetto (README, istruzioni per gli assistenti, piani
 precedenti).
@@ -130,6 +148,10 @@ possa fare davvero. Non a campione: punto per punto.
 - **Prerequisiti:** dipendenze, versioni, configurazioni, permessi, dati che la
   feature dà per scontati.
 - **Come si verifica qui:** i comandi reali di test, lint e build del progetto.
+
+Prima di iniziare ricontrolla branch e commit: se la conversazione è stata lunga,
+l'utente o un'altra sessione possono averli cambiati nel frattempo. Se non sono
+più quelli confermati, dillo e chiedi su quale stato verificare.
 
 Classifica ogni punto discusso:
 
@@ -198,7 +220,8 @@ facendo finta di essere lei e cerca ogni punto in cui dovrebbe indovinare.
 # Piano: <nome della feature>
 
 Data: <AAAA-MM-GG> · Stato: pronto per l'implementazione
-Base: branch `<branch>` · commit `<sha breve>`
+Base: branch `<branch>` · commit `<sha breve>` (confermati dall'utente)
+Branch di lavoro: `<lo stesso | nuovo branch da creare dalla base>`
 
 ## Obiettivo
 Cosa si realizza e perché, in poche frasi. Il problema che risolve.
@@ -273,7 +296,13 @@ Dopo aver salvato:
    una frase. Le modifiche che chiede vanno applicate al file, non solo dette in
    chat.
 3. Ricorda che l'implementazione avviene in un'altra sessione, a cui basta il
-   percorso del piano. Non avviarla da qui, a meno che l'utente lo chieda.
+   percorso del piano (con la skill `implement-plan`, se disponibile). Non
+   avviarla da qui, a meno che l'utente lo chieda.
+
+Chi implementa aggiornerà lo Stato in testa al piano (`in corso`, `implementato`,
+`implementato con riserve`) e aggiungerà in fondo una sezione "Avanzamento" con i
+passi fatti e gli scostamenti. Non scriverla tu: un piano appena consegnato non
+ne ha.
 
 Non fare commit del piano di tua iniziativa: chiedi all'utente se lo vuole
 versionato.
@@ -281,7 +310,9 @@ versionato.
 ## Se il piano esiste già
 
 Se l'utente torna su un piano già scritto (nuova richiesta, scoperta in fase di
-implementazione, cambio di idea), rileggi il file, verifica che il codice a cui fa
+implementazione, cambio di idea), rileggi il file — compresa la sezione
+"Avanzamento", se l'implementazione è già iniziata: dice cosa è già stato fatto e
+cosa è andato diversamente — verifica che il codice a cui fa
 riferimento non sia cambiato rispetto al commit indicato in testa, e ripercorri
 solo le fasi toccate dalla modifica. Aggiorna lo stesso file, compresa la sezione
 Decisioni: un piano che contiene ancora la scelta vecchia accanto alla nuova è
