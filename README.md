@@ -11,6 +11,7 @@ modello o da un fornitore specifico.
 | Skill | Cosa fa |
 | --- | --- |
 | [feature-observer](feature-observer/) | Osservatore in sola lettura: segue una feature che un'altra sessione sta sviluppando nello stesso progetto, senza toccare il codice. |
+| [section-explainer](section-explainer/) | Fa conoscere una sezione del software partendo dal flusso, con una guida interattiva quando è grande, e verifica con domande che sia stata capita. |
 
 ## Come si usano
 
