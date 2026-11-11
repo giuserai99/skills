@@ -12,6 +12,7 @@ modello o da un fornitore specifico.
 | --- | --- |
 | [feature-observer](feature-observer/) | Osservatore in sola lettura: segue una feature che un'altra sessione sta sviluppando nello stesso progetto, senza toccare il codice. |
 | [section-explainer](section-explainer/) | Fa conoscere una sezione del software partendo dal flusso, con una guida interattiva quando è grande, e verifica con domande che sia stata capita. |
+| [ticket-resolver](ticket-resolver/) | Dato un problema o un ticket, trova la sezione di codice coinvolta e chiede come procedere: prima la spiegazione di come funziona, poi problemi e soluzioni, oppure dritto alla causa. |
 
 ## Come si usano
 
