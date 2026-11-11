@@ -28,7 +28,8 @@ istruzioni.
    "risolvi questo ticket" o "perché succede questo?".
 2. L'assistente individua la sezione di codice coinvolta e ti chiede:
    **guidato** o **diretto**.
-3. Ricevi causa e soluzioni; se vuoi, gli chiedi di applicare quella consigliata.
+3. Ricevi causa, soluzioni e l'elenco delle modifiche da fare; le applica solo
+   se le approvi.
 
 Per saltare la domanda dillo subito: "spiegami prima come funziona" oppure "vai
 dritto al problema".
@@ -47,7 +48,11 @@ dritto al problema".
   Distingue i fatti osservati dalle deduzioni e dichiara il grado di certezza.
 - **Soluzioni.** Per ogni causa: cosa cambiare, impatto sugli altri chiamanti,
   rischi, come verificare. Ne consiglia una.
-- **Applica solo su richiesta.** Non modifica il codice finché non glielo chiedi.
+- **Sola lettura finché non approvi.** Per tutta l'indagine non crea né modifica
+  file nel progetto e non lancia comandi che lo cambiano; gli appunti stanno
+  fuori dal progetto. Chiude con l'elenco delle modifiche, file per file, e le
+  applica solo dopo il tuo sì. Il sì vale per quell'elenco: per qualsiasi altra
+  modifica chiede di nuovo.
 
 ## Limiti
 

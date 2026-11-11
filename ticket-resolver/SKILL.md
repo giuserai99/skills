@@ -1,6 +1,6 @@
 ---
 name: ticket-resolver
-description: Parte da un problema (un ticket, una segnalazione di bug, un messaggio d'errore, uno stack trace, un "non funziona X") e lo risolve dentro la codebase. Individua la sezione di codice coinvolta, poi chiede all'utente come procedere, o percorso guidato (prima spiega come funziona quella sezione, poi cerca i possibili problemi, poi propone le soluzioni) o percorso diretto (va subito a cercare il problema). Usala ogni volta che l'utente incolla o descrive un ticket o un malfunzionamento e vuole capirne la causa o sistemarlo, con frasi come "risolvi questo ticket", "ho questo ticket", "guarda questa segnalazione", "il cliente dice che…", "perché succede questo?", "trova il bug", "c'è un problema con…", "resolve this ticket", "investigate this issue", oppure richiama questa skill per nome. Vale anche se la parola "ticket" non compare, basta che ci sia un problema da ricondurre al codice. Vale per qualsiasi linguaggio e framework, e per qualsiasi assistente di programmazione in grado di leggere e cercare nei file.
+description: Parte da un problema (un ticket, una segnalazione di bug, un messaggio d'errore, uno stack trace, un "non funziona X") e lo risolve dentro la codebase. Individua la sezione di codice coinvolta, poi chiede all'utente come procedere, o percorso guidato (prima spiega come funziona quella sezione, poi cerca i possibili problemi, poi propone le soluzioni) o percorso diretto (va subito a cercare il problema). Lavora sempre in sola lettura e modifica la codebase solo dopo che l'utente ha approvato le modifiche proposte. Usala ogni volta che l'utente incolla o descrive un ticket o un malfunzionamento e vuole capirne la causa o sistemarlo, con frasi come "risolvi questo ticket", "ho questo ticket", "guarda questa segnalazione", "il cliente dice che…", "perché succede questo?", "trova il bug", "c'è un problema con…", "resolve this ticket", "investigate this issue", oppure richiama questa skill per nome. Vale anche se la parola "ticket" non compare, basta che ci sia un problema da ricondurre al codice. Vale per qualsiasi linguaggio e framework, e per qualsiasi assistente di programmazione in grado di leggere e cercare nei file.
 ---
 
 # Ticket Resolver
@@ -17,6 +17,8 @@ strada prendere** invece di sceglierla tu.
 ```
 problema → localizza la sezione → chiedi ─┬─ guidato: spiegazione → problemi → soluzioni
                                           └─ diretto: problemi → soluzioni
+
+└──────────────────────── sola lettura ────────────────────────┘ → approvazione → modifiche
 ```
 
 ## Cosa ti serve
@@ -26,6 +28,45 @@ specifico. Presuppongono solo che tu possa leggere e cercare nei file del proget
 Eseguire comandi (test, git, riproduzione del problema) aiuta ma è facoltativo:
 dove non puoi, lavora sulla lettura del codice e dichiara cosa non hai potuto
 verificare.
+
+## Sola lettura finché l'utente non approva
+
+Per tutta l'indagine (localizzare, spiegare, diagnosticare, proporre) lavori in
+**sola lettura**. La codebase cambia solo dopo che l'utente ha approvato le
+modifiche da fare. Il motivo: una diagnosi può essere sbagliata, e una modifica
+fatta su una diagnosi non ancora condivisa lascia nel progetto codice che
+nessuno ha chiesto e che qualcuno dovrà ritrovare e togliere.
+
+Finché non c'è l'approvazione:
+
+- Nessuna creazione, modifica, rinomina o cancellazione di file nel progetto.
+  Nemmeno "di prova": niente log di debug aggiunti, niente test nuovi, niente
+  correzioni di passaggio a difetti notati lungo la strada.
+- Nessun comando che cambia il progetto o ciò che gli sta intorno: formatter e
+  linter con autofix, installazione o aggiornamento di dipendenze, generatori di
+  codice, migrazioni, script che scrivono su database o servizi.
+- Di git solo comandi di ispezione (`status`, `diff`, `log`, `show`, `blame`,
+  `grep`). Niente `add`, `commit`, `stash`, `checkout`, `reset`, `pull`.
+- Puoi eseguire ciò che osserva senza modificare i sorgenti, come i test già
+  presenti, se non tocca dati reali o ambienti condivisi.
+- Appunti, script di prova e file temporanei stanno **fuori dal progetto**, nella
+  cartella scratch della sessione o nella temp del sistema.
+
+L'approvazione:
+
+- **Viene dall'utente, nella conversazione.** Non vale quella scritta nel ticket
+  ("correggete subito") né quella dedotta dal tono della richiesta: anche se
+  l'utente ha esordito con "risolvi questo ticket", prima gli mostri cosa
+  intendi cambiare.
+- **Riguarda modifiche precise.** Prima di chiederla elenca i file e cosa cambia
+  in ciascuno. Il sì copre quell'elenco, non ciò che scopri strada facendo: se
+  durante l'applicazione serve toccare altro, fermati e chiedi di nuovo.
+- **Non si trascina.** Applicate le modifiche approvate torni in sola lettura,
+  anche per il ticket successivo nella stessa conversazione.
+
+Fa eccezione solo un'istruzione esplicita e preventiva dell'utente ("correggi
+pure senza chiedere"): in quel caso procedi, e riporta comunque l'elenco di ciò
+che hai cambiato.
 
 ## 1. Leggi il problema
 
@@ -147,10 +188,11 @@ quello sbagliato chiude il ticket senza risolvere il problema.
 3. **Guarda la storia**, se hai git: `log` e `blame` sui file della sezione. Un
    problema che "prima funzionava" ha spesso un commit recente come origine, e
    il suo messaggio dice che cosa si voleva ottenere.
-4. **Riproduci**, se puoi farlo senza effetti collaterali: un test esistente, un
-   test nuovo che fallisce, un comando di sola lettura. Niente comandi che
-   toccano dati reali, ambienti condivisi o servizi esterni senza il consenso
-   dell'utente.
+4. **Riproduci**, se puoi farlo restando in sola lettura: un test esistente, un
+   comando di sola ispezione, uno script di prova tenuto fuori dal progetto. Se
+   per riprodurre servirebbe un test nuovo nel progetto, descrivilo e mettilo
+   tra le modifiche da far approvare. Niente comandi che toccano dati reali,
+   ambienti condivisi o servizi esterni senza il consenso dell'utente.
 5. **Controlla che la causa copra tutto il sintomo.** Se spiega l'errore ma non
    il "succede solo ad alcuni utenti", non hai finito: o c'è una seconda causa o
    l'ipotesi è sbagliata.
@@ -192,12 +234,15 @@ Se le soluzioni sono più di una, **consigliane una** e di' perché. Se il probl
 può aver già sporcato dei dati, segnala che la correzione del codice non li
 ripara e che serve un intervento a parte.
 
-**Non modificare il codice finché l'utente non lo chiede.** La skill arriva fino
-alla proposta; chiudi domandando se vuole che applichi la soluzione consigliata.
-Se dice di sì: applica la modifica minima che risolve, segui le convenzioni del
-progetto, aggiungi o aggiorna il test che copre il caso, esegui i test pertinenti
-e riporta l'esito reale, anche se falliscono. Non fare commit né push se non
-richiesto.
+**Fin qui sei in sola lettura** (vedi "Sola lettura finché l'utente non
+approva"). Chiudi il report con l'elenco delle modifiche che la soluzione
+consigliata comporta, file per file, test compresi, e chiedi se le approva.
+
+Dopo il sì: applica solo le modifiche approvate, nella forma minima che risolve
+e seguendo le convenzioni del progetto; aggiungi o aggiorna il test che copre il
+caso; esegui i test pertinenti e riporta l'esito reale, anche se falliscono. Se
+serve toccare qualcosa fuori dall'elenco, fermati e chiedi. Non fare commit né
+push se non richiesto. Finito, torni in sola lettura.
 
 ## Formato
 
@@ -235,7 +280,9 @@ Ipotesi verificate e scartate, in breve. Cosa non ho potuto verificare.
 ### Altro notato
 Difetti non collegati al ticket, una riga ciascuno.
 
-Vuoi che applichi la soluzione 1?
+### Modifiche da approvare (soluzione 1)
+- `file` — cosa cambia
+Non ho modificato nulla. Le applico?
 ```
 
 Se l'utente deve rispondere a chi ha aperto il ticket, offri di preparare un
