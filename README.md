@@ -11,6 +11,7 @@ modello o da un fornitore specifico.
 | Skill | Cosa fa |
 | --- | --- |
 | [feature-observer](feature-observer/) | Osservatore in sola lettura: segue una feature che un'altra sessione sta sviluppando nello stesso progetto, senza toccare il codice. |
+| [write-plan](write-plan/) | Pianificazione: chiarisce la feature con l'utente, ne verifica la fattibilità sulla codebase e scrive un piano completo che un'altra sessione implementerà. |
 
 ## Come si usano
 
