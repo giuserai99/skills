@@ -11,6 +11,7 @@ modello o da un fornitore specifico.
 | Skill | Cosa fa |
 | --- | --- |
 | [feature-observer](feature-observer/) | Osservatore in sola lettura: segue una feature che un'altra sessione sta sviluppando nello stesso progetto, senza toccare il codice. |
+| [ticket-resolver](ticket-resolver/) | Dato un problema o un ticket, trova la sezione di codice coinvolta e chiede come procedere: prima la spiegazione di come funziona, poi problemi e soluzioni, oppure dritto alla causa. |
 
 ## Come si usano
 
