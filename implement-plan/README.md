@@ -35,6 +35,7 @@ istruzioni.
    seguire com'è scritto.
 4. Leggi il resoconto finale: cosa è stato fatto, esito delle verifiche,
    scostamenti, cosa resta a te.
+5. Se vuoi, accetta la guida interattiva che ti propone alla fine.
 
 Se la sessione si interrompe, aprine un'altra e scrivi "riprendi
 l'implementazione del piano": riparte dall'avanzamento annotato nel file.
@@ -56,6 +57,10 @@ l'implementazione del piano": riparte dall'avanzamento annotato nel file.
   nel file: un'altra sessione può riprendere da lì.
 - **Verifica finale e resoconto onesto.** Esegue i comandi reali del progetto e
   riporta gli esiti così come sono.
+- **Guida interattiva su richiesta.** Alla fine ti chiede se vuoi un artifact
+  interattivo con la spiegazione approfondita della feature: flusso, codice
+  reale, ragioni delle scelte, casi limite e l'elenco spuntabile dei test
+  manuali con cui verificare tu stesso che la feature funzioni.
 
 ## Limiti
 

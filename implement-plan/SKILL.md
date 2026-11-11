@@ -263,6 +263,89 @@ produzione.
 Non fare push, non aprire pull request e non unire branch di tua iniziativa:
 chiedi.
 
+## 7. Proponi una guida interattiva della feature
+
+Il resoconto dice cosa è stato fatto; non spiega la feature. L'utente ha
+concordato il piano ma non ha visto nascere il codice, e dovrà rivederlo,
+mantenerlo o spiegarlo ad altri.
+
+**Chiedi sempre, alla fine.** Subito dopo il resoconto chiedi all'utente, in una
+riga, se vuole un artifact interattivo con la spiegazione approfondita della
+feature. Chiedilo una volta sola e non crearlo di tua iniziativa: se rifiuta, il
+lavoro è finito. Chiedilo anche se la feature è piccola (decide lui se ne vale la
+pena) e anche se lo stato è `implementato con riserve`: in quel caso la guida le
+riporta. Non chiederlo a implementazione ancora in corso.
+
+**Come realizzarla.** Se l'ambiente ha uno strumento per pubblicare pagine o
+artifact, usalo seguendo le sue linee guida di design; altrimenti genera un
+singolo file HTML autonomo. Il file sorgente sta **fuori dal progetto** (cartella
+scratch o temporanea della sessione), a meno che l'utente lo voglia nel
+repository: non deve finire per sbaglio nel diff della feature. Scrivi i testi
+nella lingua dell'utente.
+
+**Da dove prendi il contenuto.** Dal piano (obiettivo, comportamento atteso,
+decisioni e loro ragioni), dall'avanzamento (scostamenti) e dal codice così com'è
+adesso sul disco: rileggi i file, non ricostruirli a memoria.
+
+**Struttura.** Una guida a passi, non un documento da scorrere:
+
+- **Indice sempre presente** (colonna laterale fissa su schermi larghi, barra in
+  alto su telefono), con il passo attivo evidenziato.
+- **Un passo alla volta** al centro, con pulsanti precedente/successivo, frecce
+  della tastiera e un indirizzo per passo.
+- **Panoramica iniziale:** cosa fa la feature e perché, la mappa del flusso
+  cliccabile (da dove entra, quali strati attraversa, dove finisce), l'elenco dei
+  file toccati raggruppati per ruolo.
+- **Passi in ordine di flusso** — quello in cui una richiesta attraversa il
+  codice, non l'ordine in cui l'hai scritto. Ogni passo ha gli stessi blocchi,
+  nello stesso ordine:
+  - **Cosa fa e perché**, in poche frasi.
+  - **Codice reale:** snippet presi dal progetto così come sono, con
+    `percorso:riga`, corti, scelti perché spiegano il passo. Mai codice inventato
+    o ripulito, mai segreti o dati personali.
+  - **Perché così:** la decisione del piano che sta dietro quel pezzo e le
+    alternative scartate. È ciò che il codice da solo non dice.
+  - **Casi limite:** come vengono gestiti e dove.
+  - **Come provarlo:** i comandi di test pertinenti e le verifiche manuali, come
+    lista spuntabile.
+- **Test manuali** — un passo dedicato, sempre presente e raggiungibile
+  dall'indice con il conteggio dei test spuntati. Raccoglie le prove che l'utente
+  può fare di persona per verificare che la feature sia implementata
+  correttamente. Devono coprire tutto il "Comportamento atteso" del piano: il
+  percorso principale, ogni caso limite e ogni errore previsto, più un controllo
+  che ciò che esisteva prima funzioni ancora dove la feature lo tocca. Ogni test
+  è una voce spuntabile con:
+  - **Prerequisiti:** cosa serve per eseguirlo (comando per avviare l'app, dati
+    di prova, utente o permesso, configurazione).
+  - **Passi:** le azioni da compiere, numerate e concrete: quale schermata, quale
+    comando, quale valore inserire. Chi li esegue non deve conoscere il codice.
+  - **Risultato atteso:** cosa si deve vedere, in modo osservabile (un messaggio,
+    un dato salvato, una risposta), così che l'esito sia sì o no.
+  - **Se fallisce:** il file da cui partire a guardare, come `percorso:riga`.
+
+  Comandi, percorsi, nomi di schermate e dati devono essere quelli reali del
+  progetto: ricavali dal codice e dagli script esistenti, non inventarli. Se un
+  test richiede qualcosa che non conosci (un ambiente, delle credenziali), dillo
+  nel prerequisito invece di supporlo. Indica per ciascuno se lo hai già eseguito
+  tu durante la verifica finale o se resta da fare all'utente; non segnare come
+  superato un test che non hai eseguito. Le spunte dell'utente devono restare
+  salvate quando riapre la pagina.
+
+  Nei singoli passi, il blocco "Come provarlo" rimanda ai test di questo elenco
+  che riguardano quel pezzo, oltre ai comandi dei test automatici.
+- **Passo finale:** scostamenti dal piano, riserve e verifiche che spettano
+  all'utente, cosa è stato notato fuori perimetro, e come estendere o modificare
+  la feature in futuro.
+
+In testa alla pagina tieni una riga compatta con progetto, branch, commit e
+percorso del piano.
+
+Un passo che non entra in una schermata va diviso in due. La guida fotografa il
+codice al commit indicato in testa: se dopo la pubblicazione cambi ancora qualcosa
+nella stessa sessione, aggiorna la stessa pagina.
+
+Consegna il collegamento o il percorso del file, in una riga.
+
 ## Se il piano non viene da write-plan
 
 Funziona lo stesso con qualsiasi documento che descriva cosa costruire: un piano
